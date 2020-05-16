@@ -54,6 +54,9 @@ public class ShipService {
     }
     @Transactional
     public void delete(Long id) {
+        if (id==0) {
+            throw new BadRequestException();
+        }
         if (!shipRepository.existsById(id)) {
             throw new NotFoundException();
         }
@@ -62,6 +65,9 @@ public class ShipService {
 
     @Transactional
     public Ship getShipById(Long id) {
+        if (id==0) {
+            throw new BadRequestException();
+        }
         if (!shipRepository.existsById(id)) {
             throw new NotFoundException();
         }
@@ -70,8 +76,11 @@ public class ShipService {
 
     @Transactional
     public Ship updateShip(Ship newShip, Long id) {
-        Ship shipUpdate = getShipById(id);
 
+        if (id==0) {
+            throw new BadRequestException();
+        }
+        Ship shipUpdate = getShipById(id);
         if (newShip == null || shipUpdate == null) {
             throw new BadRequestException();
         }
