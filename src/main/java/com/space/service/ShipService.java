@@ -1,6 +1,8 @@
 package com.space.service;
 
 import com.space.controller.ShipOrder;
+import com.space.exception.BadRequestException;
+import com.space.exception.NotFoundException;
 import com.space.model.Ship;
 import com.space.model.ShipType;
 import com.space.repository.ShipRepository;
@@ -51,19 +53,19 @@ public class ShipService {
         return shipRepository.save(ship);
     }
     @Transactional
-    public Integer delete(Long id) {
-        if (shipRepository.existsById(id)) {
-            shipRepository.deleteById(id);
-            return 1;
-         }
-        return null;
+    public void delete(Long id) {
+        if (!shipRepository.existsById(id)) {
+            throw new NotFoundException();
+        }
+        shipRepository.deleteById(id);
     }
+
     @Transactional
     public Ship getShipById(Long id) {
-        if (shipRepository.existsById(id)) {
-            return shipRepository.findById(id).orElse(null);
+        if (!shipRepository.existsById(id)) {
+            throw new NotFoundException();
         }
-        return null;
+        return shipRepository.findById(id).orElse(null);
     }
 
     @Transactional
@@ -71,17 +73,17 @@ public class ShipService {
         Ship shipUpdate = getShipById(id);
 
         if (newShip == null || shipUpdate == null) {
-            return null;
+            throw new BadRequestException();
         }
         if (newShip.getName() != null) {
             if (newShip.getName().length() > 50 ||  newShip.getName().isEmpty()) {
-                return null;
+                throw new BadRequestException();
             }
             shipUpdate.setName(newShip.getName());
         }
         if (newShip.getPlanet() != null) {
             if (newShip.getPlanet().length() > 50 ||  newShip.getPlanet().isEmpty()) {
-                return null;
+                throw new BadRequestException();
             }
             shipUpdate.setPlanet(newShip.getPlanet());
         }
@@ -91,7 +93,7 @@ public class ShipService {
         if (newShip.getProdDate() != null) {
             if (newShip.getProdDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear() < 2800 ||
                     newShip.getProdDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear() > 3019) {
-                return null;
+                throw new BadRequestException();
             }
             shipUpdate.setProdDate(newShip.getProdDate());
         }
@@ -100,13 +102,13 @@ public class ShipService {
         }
         if (newShip.getSpeed() != null) {
             if ( newShip.getSpeed() < 0.01d ||  newShip.getSpeed() > 0.99d) {
-                return null;
+                throw new BadRequestException();
             }
             shipUpdate.setSpeed(newShip.getSpeed());
         }
         if (newShip.getCrewSize() != null) {
             if (newShip.getCrewSize() < 1 ||  newShip.getCrewSize() > 9999) {
-                return null;
+                throw new BadRequestException();
             }
             shipUpdate.setCrewSize(newShip.getCrewSize());
         }

@@ -64,10 +64,7 @@ public class ShipController {
         if(shipService.getShipById(id) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if(shipService.delete(id) == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
+        shipService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
