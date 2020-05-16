@@ -43,9 +43,7 @@ public class ShipController {
              return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
          } else
-         if(shipService.getShipById(id) == null) {
-             return new ResponseEntity<>(shipService.getShipById(id),HttpStatus.NOT_FOUND);
-         }
+
          return new ResponseEntity<>(shipService.getShipById(id),HttpStatus.OK);
     }
 
@@ -66,7 +64,10 @@ public class ShipController {
         if(shipService.getShipById(id) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        shipService.delete(id);
+        if(shipService.delete(id) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
