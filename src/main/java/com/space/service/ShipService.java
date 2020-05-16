@@ -51,9 +51,10 @@ public class ShipService {
         return shipRepository.save(ship);
     }
     @Transactional
-    public Ship delete(Long id) {
+    public Integer delete(Long id) {
         if (shipRepository.existsById(id)) {
             shipRepository.deleteById(id);
+            return 1;
          }
         return null;
     }
