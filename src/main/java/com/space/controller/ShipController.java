@@ -39,7 +39,7 @@ public class ShipController {
 
     @RequestMapping(value = "/ships/{id}",method = RequestMethod.GET)
     public ResponseEntity<Ship> getShipById(@PathVariable Long id) {
-         if(id == null && id <=0 &&  id - Math.floor(id) !=0){
+         if(id == null || id <=0 ||  id - Math.floor(id) !=0){
              return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
          } else
@@ -58,7 +58,7 @@ public class ShipController {
 
     @RequestMapping(value = "/ships/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<Ship> deleteShip(@PathVariable Long id) {
-        if(id == null && id <=0 && id - Math.floor(id) !=0){
+        if(id == null || id <=0 ||  id - Math.floor(id) !=0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else
 
@@ -68,7 +68,7 @@ public class ShipController {
 
     @RequestMapping(value = "/ships/{id}",method = RequestMethod.POST)
     public ResponseEntity<Ship> updateShip(@RequestBody Ship ship, @PathVariable Long id) {
-        if(id != null && id <= 0 &&  id - Math.floor(id) !=0 ){
+        if(id == null || id <=0 ||  id - Math.floor(id) !=0 ){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }else
 
