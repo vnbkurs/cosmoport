@@ -61,9 +61,7 @@ public class ShipController {
         if(id == null && id < 0 && id - Math.floor(id) !=0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else
-        if(shipService.getShipById(id) == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
         shipService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -73,13 +71,6 @@ public class ShipController {
         if(id != null && id > 0 &&  id - Math.floor(id) !=0 ){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }else
-        if(shipService.getShipById(id) == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else
-        if(shipService.updateShip(ship, id)== null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
         return new ResponseEntity<>(shipService.updateShip(ship, id),HttpStatus.OK);
     }
