@@ -41,6 +41,7 @@ public class ShipController {
     public ResponseEntity<Ship> getShipById(@PathVariable Long id) {
          if(id == null && id < 0 &&  id - Math.floor(id) !=0){
              return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
          } else
          if(shipService.getShipById(id) == null) {
              return new ResponseEntity<>(shipService.getShipById(id),HttpStatus.NOT_FOUND);
